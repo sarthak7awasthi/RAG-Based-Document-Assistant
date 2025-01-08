@@ -1,42 +1,55 @@
 // src/components/Upload/DocumentUploadContainer.tsx
-import React, { useState } from "react";
-import { DocumentUploadPage } from "./DocumentUploadPage";
-import { uploadDocument } from "../../api";
 
-interface CustomError extends Error {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-}
+import React, { useState } from "react";
+import axios from "axios";
+import { DocumentUploadPage } from "./DocumentUploadPage";
 
 export function DocumentUploadContainer() {
+  const [chunks, setChunks] = useState<string[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+
   const handleFileUpload = async (file: File) => {
     try {
-      setIsLoading(true);
+      setIsProcessing(true);
       setUploadStatus(null);
-      const response = await uploadDocument(file);
-      setUploadStatus(response.message || "Upload successful!");
-    } catch (error: unknown) {
-      const customError = error as CustomError;
-      if (customError.response?.data?.message) {
-        setUploadStatus(customError.response.data.message);
-      } else {
-        setUploadStatus("Error uploading file");
-      }
+
+      // Prepare form data for file upload
+      const formData = new FormData();
+      formData.append("file", file);
+
+      // 1) Process the document to extract chunks
+      const processResponse = await axios.post(
+        "http://127.0.0.1:8000/process-document",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      const extractedChunks = processResponse.data.chunks || [];
+      setChunks(extractedChunks);
+
+      // 2) Generate embeddings from those chunks to update your FAISS index
+      await axios.post("http://127.0.0.1:8000/generate-embeddings", {
+        chunks: extractedChunks,
+      });
+
+      // If everything succeeded, notify the user
+      setUploadStatus("Document processed and indexed successfully!");
+    } catch (error) {
+      console.error("Error processing file:", error);
+      setUploadStatus("Failed to process document.");
     } finally {
-      setIsLoading(false);
+      setIsProcessing(false);
     }
   };
 
   return (
     <DocumentUploadPage
       onFileUpload={handleFileUpload}
+      chunks={chunks}
+      isProcessing={isProcessing}
       uploadStatus={uploadStatus}
-      isLoading={isLoading}
     />
   );
 }

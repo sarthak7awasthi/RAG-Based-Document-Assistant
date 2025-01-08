@@ -1,4 +1,5 @@
 // src/components/Upload/DocumentUploadPage.tsx
+
 import React, { useState } from "react";
 import {
   Box,
@@ -12,14 +13,16 @@ import {
 
 interface DocumentUploadPageProps {
   onFileUpload: (file: File) => void;
+  chunks: string[];
+  isProcessing: boolean;
   uploadStatus: string | null;
-  isLoading: boolean;
 }
 
 export function DocumentUploadPage({
   onFileUpload,
+  chunks,
+  isProcessing,
   uploadStatus,
-  isLoading,
 }: DocumentUploadPageProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -40,16 +43,33 @@ export function DocumentUploadPage({
       <Heading size="md" mb={4}>
         Upload Documents
       </Heading>
-      <VStack gap={4} align="stretch">
+      <VStack spacing={4} align="stretch">
+        {/* File input */}
         <Input type="file" onChange={handleChange} />
+
+        {/* Upload button */}
         <Button
           colorScheme="blue"
           onClick={handleUpload}
-          disabled={!selectedFile || isLoading}
+          disabled={!selectedFile || isProcessing}
         >
-          {isLoading ? <Spinner size="sm" /> : "Upload"}
+          {isProcessing ? <Spinner size="sm" /> : "Process & Index"}
         </Button>
+
+        {/* Status text */}
         {uploadStatus && <Text>{uploadStatus}</Text>}
+
+        {/* Display chunks (optional) */}
+        {chunks.length > 0 && (
+          <Box mt={4}>
+            <Heading size="sm">Extracted Chunks:</Heading>
+            {chunks.map((chunk, idx) => (
+              <Text key={idx} fontSize="sm" mt={2}>
+                {chunk}
+              </Text>
+            ))}
+          </Box>
+        )}
       </VStack>
     </Box>
   );

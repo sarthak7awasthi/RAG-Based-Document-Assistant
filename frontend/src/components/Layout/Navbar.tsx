@@ -16,15 +16,15 @@ export function Navbar() {
       <Heading size="md">RAG Document Assistant</Heading>
       <Spacer />
       <Box>
+        <Link as={RouterLink} marginRight={4}>
+          <RouterLink to="/upload">Upload</RouterLink>
+        </Link>
         <Link
           as={RouterLink}
           marginRight={4}
           _hover={{ textDecoration: "none" }}
         >
           <RouterLink to="/">Query</RouterLink>
-        </Link>
-        <Link as={RouterLink} marginRight={4}>
-          <RouterLink to="/upload">Upload</RouterLink>
         </Link>
         <Link as={RouterLink} _hover={{ textDecoration: "none" }}>
           <RouterLink to="/chat">Chat</RouterLink>

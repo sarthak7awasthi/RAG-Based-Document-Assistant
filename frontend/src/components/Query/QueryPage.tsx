@@ -34,7 +34,7 @@ export function QueryPage({
   return (
     <Box maxW="600px" mx="auto" mt={8} p={4}>
       <Heading size="md" mb={4}>
-        Ask Documents
+        Ask Document Assistant
       </Heading>
       <VStack gap={4} align="stretch">
         <Input

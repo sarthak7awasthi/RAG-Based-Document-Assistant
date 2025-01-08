@@ -1,7 +1,8 @@
 // src/components/Query/QueryContainer.tsx
+
 import React, { useState } from "react";
+import axios from "axios";
 import { QueryPage } from "./QueryPage";
-import { queryRAG } from "../../api";
 
 export function QueryContainer() {
   const [query, setQuery] = useState("");
@@ -11,11 +12,20 @@ export function QueryContainer() {
   const handleQuerySubmit = async () => {
     try {
       setIsLoading(true);
-      const data = await queryRAG(query);
-      // Suppose your API returns an array of answers
+
+      // Make the API call inline, no separate function
+      const response = await axios.post(
+        "http://127.0.0.1:8000/generate-answer",
+        {
+          query,
+        }
+      );
+      const data = response.data;
+
+      // Suppose your API returns results in data.results
       setResults(data.results || []);
     } catch (error) {
-      console.error(error);
+      console.error("Error querying RAG:", error);
     } finally {
       setIsLoading(false);
     }

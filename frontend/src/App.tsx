@@ -19,12 +19,10 @@ function App() {
 
       {/* Define your routes */}
       <Routes>
-        {/* Home or main query page */}
-        <Route path="/" element={<QueryContainer />} />
-
         {/* Document upload page */}
-        <Route path="/upload" element={<DocumentUploadContainer />} />
-
+        <Route path="/" element={<DocumentUploadContainer />} />
+        {/* Home or main query page */}
+        <Route path="/query" element={<QueryContainer />} />
         {/* Chat page */}
         <Route path="/chat" element={<ChatContainer />} />
       </Routes>

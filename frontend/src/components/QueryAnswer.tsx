@@ -8,7 +8,7 @@ const QueryAnswer: React.FC = () => {
 
   const handleQuery = async () => {
     if (!query.trim()) {
-      alert("Please enter a question before submitting.");
+      alert("Please enter a valid question before submitting.");
       return;
     }
 
@@ -32,33 +32,34 @@ const QueryAnswer: React.FC = () => {
   };
 
   return (
-    <div className="p-8 max-w-md mx-auto bg-gradient-to-b from-white to-gray-50 rounded-lg shadow-lg border border-gray-200">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+    <div className="p-8 max-w-md mx-auto bg-white rounded-lg shadow-lg border border-gray-200">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
         Query Answer Generator
-      </h1>
-      <input
-        type="text"
+      </h2>
+      <textarea
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Ask your question..."
-        className="w-full mb-4 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        placeholder="Enter your query here..."
+        className="w-full mb-4 p-3 border border-gray-300 rounded-lg shadow-sm resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        rows={4}
         disabled={isLoading}
         aria-label="Enter your query"
       />
       <button
         onClick={handleQuery}
         disabled={isLoading || !query.trim()}
-        className={`w-full py-3 rounded-lg text-white font-medium transition ${
+        className={`w-full py-2 rounded-lg font-medium text-white transition ${
           isLoading || !query.trim()
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-blue-500 hover:bg-blue-600"
         }`}
+        aria-busy={isLoading}
       >
         {isLoading ? "Loading..." : "Get Answer"}
       </button>
       {answer && (
         <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg">
-          <strong className="block text-lg text-gray-700 mb-2">Answer:</strong>
+          <h3 className="text-lg font-semibold text-gray-700 mb-2">Answer:</h3>
           <p className="text-gray-800">{answer}</p>
         </div>
       )}

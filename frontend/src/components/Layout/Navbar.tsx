@@ -17,14 +17,14 @@ export function Navbar() {
       <Spacer />
       <Box>
         <Link as={RouterLink} marginRight={4}>
-          <RouterLink to="/upload">Upload</RouterLink>
+          <RouterLink to="/">Upload</RouterLink>
         </Link>
         <Link
           as={RouterLink}
           marginRight={4}
           _hover={{ textDecoration: "none" }}
         >
-          <RouterLink to="/">Query</RouterLink>
+          <RouterLink to="/query">Query</RouterLink>
         </Link>
         <Link as={RouterLink} _hover={{ textDecoration: "none" }}>
           <RouterLink to="/chat">Chat</RouterLink>

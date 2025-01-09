@@ -1,4 +1,3 @@
-// src/components/Chat/ChatPage.tsx
 import React from "react";
 import {
   Box,
@@ -35,43 +34,74 @@ export function ChatPage({
   };
 
   return (
-    <Box maxW="600px" mx="auto" mt={8} p={4}>
-      <Heading size="md" mb={4}>
+    <Box
+      maxW="600px"
+      mx="auto"
+      mt={8}
+      p={6}
+      borderWidth={1}
+      borderRadius="lg"
+      bgGradient="linear(to-r, gray.50, gray.100)"
+      boxShadow="lg"
+    >
+      <Heading size="lg" mb={4} textAlign="center" color="blue.700">
         Chat with Documents
       </Heading>
       <VStack gap={4} align="stretch">
+        {/* Chat Messages */}
         <Box
           borderWidth={1}
           borderRadius="md"
           p={4}
           height="400px"
           overflowY="auto"
+          bg="white"
+          boxShadow="md"
         >
           {messages.map((msg, idx) => (
             <Box
               key={idx}
               mb={3}
-              bg={msg.sender === "user" ? "blue.50" : "green.50"}
-              p={2}
-              borderRadius="md"
+              bg={msg.sender === "user" ? "blue.100" : "green.100"}
+              p={3}
+              borderRadius="lg"
               alignSelf={msg.sender === "user" ? "flex-end" : "flex-start"}
               maxW="80%"
+              boxShadow="sm"
             >
-              <Text fontWeight="bold">
+              <Text
+                fontWeight="bold"
+                color={msg.sender === "user" ? "blue.600" : "green.600"}
+              >
                 {msg.sender === "user" ? "You" : "Assistant"}
               </Text>
-              <Text>{msg.text}</Text>
+              <Text color="gray.700">{msg.text}</Text>
             </Box>
           ))}
         </Box>
-        <HStack>
+
+        {/* Input Field and Send Button */}
+        <HStack spacing={3}>
           <Input
             placeholder="Type your message..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
+            size="lg"
+            borderWidth={2}
+            borderColor="gray.300"
+            _hover={{ borderColor: "blue.400" }}
+            _focus={{ borderColor: "blue.600", boxShadow: "outline" }}
           />
-          <Button colorScheme="blue" onClick={onSendMessage}>
+          <Button
+            bgColor={"blue.600"}
+            onClick={onSendMessage}
+            size="lg"
+            px={6}
+            _hover={{ bg: "blue.600" }}
+            disabled={!input.trim()}
+            _disabled={{ bg: "blue.300", cursor: "not-allowed" }}
+          >
             Send
           </Button>
         </HStack>

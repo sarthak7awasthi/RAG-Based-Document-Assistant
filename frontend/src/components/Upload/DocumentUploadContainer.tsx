@@ -33,8 +33,6 @@ export function DocumentUploadContainer() {
       await axios.post("http://127.0.0.1:8000/generate-embeddings", {
         chunks: extractedChunks,
       });
-
-      // If everything succeeded, notify the user
       setUploadStatus("Document processed and indexed successfully!");
     } catch (error) {
       console.error("Error processing file:", error);

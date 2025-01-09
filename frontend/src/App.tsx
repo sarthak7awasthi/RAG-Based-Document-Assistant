@@ -1,32 +1,26 @@
-// src/App.tsx
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { Box } from "@chakra-ui/react";
-
-// Layout component
-import { Navbar } from "./components/Layout/Navbar";
-
-// Container components
+import { Box, Heading, Spacer } from "@chakra-ui/react";
 import { DocumentUploadContainer } from "./components/Upload/DocumentUploadContainer";
-import { QueryContainer } from "./components/Query/QueryContainer";
 import { ChatContainer } from "./components/Chat/ChatContainer";
 
 function App() {
   return (
-    <Box>
-      {/* Global Navbar */}
-      <Navbar />
-
-      {/* Define your routes */}
-      <Routes>
-        {/* Document upload page */}
-        <Route path="/" element={<DocumentUploadContainer />} />
-        {/* Home or main query page */}
-        <Route path="/query" element={<QueryContainer />} />
-        {/* Chat page */}
-        <Route path="/chat" element={<ChatContainer />} />
-      </Routes>
-    </Box>
+    <>
+      <Heading
+        padding={5}
+        size="2xl"
+        mb={4}
+        fontFamily="'Courier New', Courier, monospace"
+      >
+        RAG Doc Assistant
+      </Heading>
+      <Box>
+        <Spacer />
+        <Spacer />
+        <Spacer />
+        <DocumentUploadContainer />
+        <ChatContainer />
+      </Box>
+    </>
   );
 }
 

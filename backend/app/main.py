@@ -107,11 +107,11 @@ async def process_document(file: UploadFile):
         
      
         os.remove(temp_file_path)
-        # for i in text_chunks:
+        for i in text_chunks:
 
-        #   print("here",i)
-        #   print("")
-        #   print(len(text_chunks))
+          print("here",i)
+          print("")
+          print(len(text_chunks))
         
         return JSONResponse(content={"chunks": text_chunks})
     

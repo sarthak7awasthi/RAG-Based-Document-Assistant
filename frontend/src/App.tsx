@@ -1,21 +1,27 @@
-import React from "react";
-import ChatInterface from "./ChatInterface";
-import FileUpload from "./FileUpload";
+import { Box, Heading, Spacer } from "@chakra-ui/react";
+import { DocumentUploadContainer } from "./components/Upload/DocumentUploadContainer";
+import { ChatContainer } from "./components/Chat/ChatContainer";
 
-const App: React.FC = () => {
+function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
-      <h1 className="text-3xl font-bold text-blue-600 mb-8">
-        Document Search Assistant
-      </h1>
-      <div className="w-full max-w-4xl bg-white rounded-lg shadow-md p-6">
-        <FileUpload />
-        <div className="mt-8">
-          <ChatInterface />
-        </div>
-      </div>
-    </div>
+    <>
+      <Heading
+        padding={5}
+        size="2xl"
+        mb={4}
+        fontFamily="'Courier New', Courier, monospace"
+      >
+        RAG Doc Assistant
+      </Heading>
+      <Box>
+        <Spacer />
+        <Spacer />
+        <Spacer />
+        <DocumentUploadContainer />
+        <ChatContainer />
+      </Box>
+    </>
   );
-};
+}
 
 export default App;
